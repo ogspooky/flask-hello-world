@@ -1,11 +1,25 @@
 from flask import Flask
+from flask import render_template
+
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    return 'Hello, niggers!'
 
-@app.route('/about')
+
+@app.route('/input')
 def about():
-    return 'Aout'
+    # render an html page
+    return """
+        <!DOCTYPE html>
+<html>
+<head>
+    <title>Input Box Example</title>
+</head>
+<body>
+    <input type="text" placeholder="Enter your text here">
+</body>
+</html>
+    """
