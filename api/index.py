@@ -3,13 +3,27 @@ from flask import render_template, request, render_template_string
 import requests
 import re
 import json
+import logging
 
 API_KEY = '3c19fe27-82b3-40dc-beae-606d545ea943'
 BASE_URL='https://api.hypixel.net/v2/'
 
 app = Flask(__name__)
+file_handler = logging.FileHandler('flask.log')
+app.logger.addHandler(file_handler)
+app.logger.setLevel(logging.INFO)
 
 
+@app.before_request
+def validate_api_key():
+    url = BASE_URL + f"?key={API_KEY}" 
+    response = requests.get(url)
+    data = json.loads(response.text)
+    if data['success'] == False:
+        if data['cause'] == 'Invalid API key':
+            return 'Invalid API Key', 401
+        return 'Unknown error', 500
+    return None, 200
 
 
 def is_player_online(player_name=None):
@@ -18,6 +32,7 @@ def is_player_online(player_name=None):
     url = BASE_URL + f"status?key={API_KEY}&uuid={uuid}"
     response = requests.get(url)
     data = json.loads(response.text)
+    app.logger.info(data)
     return data['session']['online']
 
 @app.route('/')
@@ -29,6 +44,8 @@ def about():
     if request.method == 'POST':
         result = is_player_online(request.form['player_name'])
         return str(result)
+
+        
     # render the generic empty input box
     return """
         <!DOCTYPE html>
