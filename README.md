@@ -31,8 +31,17 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 ## Jackson nig setup:
 1. Install WSL2 (should come with "terminal" on the windows store). This will give you a *linux shell* which you need for all dev work.
 2. Install VSCode
-3. Clone the repo
+3. Clone the repo, set up your credentials as instructed (READ)
 4. You need to make a *virtual environment* to encapsulate your depencies. For example, you have many different *python packages* on your system, but the project only needs a few of them
     - `python -m venv env` # google this, this makes your virtual environment
     - `source env/bin/activate` # go *into* that env
     - `pip freeze > requirements.txt` # Saves everything installed in that env
+
+## Useful commands
+`git pull` to get new changes i have made
+`git commit -am "msg"` Create a commit for *all* files with a given *message*
+`git push` Push one or more commits
+`pip --help | less`
+`man ls`
+`man git`
+`vercel --help | less`
